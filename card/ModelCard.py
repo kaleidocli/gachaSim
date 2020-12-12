@@ -1,4 +1,4 @@
-from CardRank import CardRank
+from card.CardRank import ECardRank
 
 
 
@@ -19,7 +19,7 @@ class ModelCard():
         # Normal init
         self.mId = ""
         self.mName = ""
-        self.mRank = CardRank.NA
+        self.mRank = ECardRank.NA
         self.mLevel = 0
         self.mDescription = ""
         self.mImageDir = ""

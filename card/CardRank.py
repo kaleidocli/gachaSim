@@ -1,6 +1,8 @@
 from enum import Enum
 
-class CardRank(Enum):
+
+
+class ECardRank(Enum):
     def __str__(self):
         if self.value == 0:
             return "n/a"
@@ -24,3 +26,15 @@ class CardRank(Enum):
     SR = 4
     SSR = 5
     L = 6
+
+class CardRank():
+    def __init__(self):
+        self.CARD_RANK_RATE = {      # Denominator is 1000
+            ECardRank.NA: 0,
+            ECardRank.C: 489,
+            ECardRank.UC: 300,
+            ECardRank.R: 150,
+            ECardRank.SR: 50,
+            ECardRank.SSR: 10,
+            ECardRank.L: 1
+        }

@@ -13,14 +13,13 @@ class ModelCard():
 
         # Init with package
         if tPackage:
-            self.mId, self.mName, self.mRank, self.mLevel, self.mDescription, self.mImageDir, self.mTag, self.mValue = tPackage
+            self.mCode, self.mName, self.mRank, self.mDescription, self.mImageDir, self.mTag, self.mValue = tPackage
             return
 
         # Normal init
-        self.mId = ""
+        self.mCode = ""
         self.mName = ""
         self.mRank = ECardRank.NA
-        self.mLevel = 0
         self.mDescription = ""
         self.mImageDir = ""
         self.mTag = []

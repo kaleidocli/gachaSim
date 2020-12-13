@@ -1,17 +1,21 @@
-from card.ModelCard import ModelCard
+from user.UserCard import UserCard
 from base.CardIndex import CardIndex
 
 
 
-class ModelCardIndex(CardIndex):
-    def CardIndexAdd(self, tCardCode: str, tCard: ModelCard):
-        if not isinstance(tCard, ModelCard): return False
-        super().CardIndexAdd(tCardCode, tCard)
+class UserCardIndex(CardIndex):
+    def __init__(self):
+        super().__init__()
+        self.mUserId = ''
+
+    def CardIndexAdd(self, tCardId: str, tCard: UserCard):
+        if not isinstance(tCard, UserCard): return False
+        super().CardIndexAdd(tCardId, tCard)
         return True
 
     def CardIndexLookUp(self, tCheckerAndValues: dict):
         """
-        Retrieve a list of Codes of cards that satisfied the condition of <tCheckers>.
+        Retrieve a list of IDs of cards that satisfied the condition of <tCheckers>.
         Pre-made checkers can be found in CardIndexCheckers.py
         + Raise KeyError if a key (of tValues' dict) required by a checker is not found
 
@@ -30,4 +34,4 @@ class ModelCardIndex(CardIndex):
                 See the doc of the Checker for options.
         """
 
-        return super().CardIndexLookUp(tCheckerAndValues, "mCode")
+        return super().CardIndexLookUp(tCheckerAndValues, "mId")

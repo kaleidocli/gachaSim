@@ -10,11 +10,15 @@ class UserCard():
         ----------
         tPackage : tuple
             (id, userId, cardCode, level, bond, userTags, moves, skills)
+        + id : str
+        + userId : str
+        + code : str
+        + level : int
+        + bond : int
+        + userTags : iterable
+        + moves : iterable
+        + skills : iterable
         """
-
-        if tPackage:
-            self.mId, self.mUserId, self.mCode, self.mLevel, self.mBond, self._mUserTags, self.mMoves, self.mSkills = tPackage
-            return
 
         self.mId = ''
         self.mUserId = ''
@@ -26,6 +30,13 @@ class UserCard():
 
         self.mMoves = {}
         self.mSkills = []
+
+        if tPackage:
+            self.mId, self.mUserId, self.mCode, self.mLevel, self.mBond, tUserTags, self.mMoves, self.mSkills = tPackage
+            # _mUserTags
+            for userTag in tUserTags:
+                self.AddUserTag(userTag)
+            return
     
     def GetUserTags(self):
         return self._mUserTags
@@ -33,7 +44,7 @@ class UserCard():
     def SetUserTags(self, tUserTags: list):
         self._mUserTags = tUserTags
 
-    def AddUserTags(self, tUserTag: str):
+    def AddUserTag(self, tUserTag: str):
         """
         Add user's tag. If dupes is found, return False.
         """

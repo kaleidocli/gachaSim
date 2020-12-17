@@ -4,11 +4,7 @@ from base.Index import Index
 
 
 class UserCardIndex(Index):
-    def __init__(self):
-        super().__init__()
-        self.mUserId = ''
-
-    def CardIndexAdd(self, tCardId: str, tCard: UserCard):
+    def IndexAdd(self, tCardId: str, tCard: UserCard):
         """
         Add a card in to the UserCardIndex, with tCardId as key and tCard as value.
 
@@ -20,11 +16,10 @@ class UserCardIndex(Index):
         if not isinstance(tCard, UserCard): raise TypeError("tCard needs to be a user.UserCard")
         super().IndexAdd(tCardId, tCard)
 
-    def CardIndexLookUp(self, tCheckerAndValues: dict):
+    def IndexLookUp(self, tCheckerAndValues: dict):
         """
         Retrieve a list of IDs of cards that satisfied the condition of <tCheckers>.
         Pre-made checkers can be found in this class
-        + Raise KeyError if a key (of tValues' dict) required by a checker is not found
 
         Parameters
         ----------
@@ -39,6 +34,11 @@ class UserCardIndex(Index):
         + Values : dict
                 Contain the options of its paired Checker.
                 See the doc of the Checker for options.
+
+        Exceptions
+        ----------
+        KeyError
+                If a key (of Values' dict) required by a checker is not found
         """
         return super().IndexLookUp(tCheckerAndValues, "mId")
 

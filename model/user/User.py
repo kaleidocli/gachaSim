@@ -1,4 +1,4 @@
-from user.UserCardIndex import UserCardIndex
+from model.user.UserCardIndex import UserCardIndex
 from utils.errors import ElementNotInRangeError
 
 

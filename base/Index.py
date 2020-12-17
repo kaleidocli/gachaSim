@@ -1,15 +1,12 @@
-
-
-
 class Index():
     def __init__(self):
         self._mDict = {}
 
-    def IndexAdd(self, tCardKey: str, tCard):
-        self._mDict[tCardKey] = tCard
+    def IndexAdd(self, tKey: str, tCard):
+        self._mDict[tKey] = tCard
 
-    def IndexGet(self, tCardKey: str):
-        return self._mDict[tCardKey]
+    def IndexGet(self, tKey: str):
+        return self._mDict[tKey]
 
     def IndexLookUp(self, tCheckerAndValues: dict, tAttrToRecord: str):
         """

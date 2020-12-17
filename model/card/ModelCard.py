@@ -1,4 +1,4 @@
-from card.CardRank import ECardRank
+from model.card.CardRank import ECardRank
 
 
 

@@ -1,5 +1,5 @@
-from card.ModelCard import ModelCard
 from base.Index import Index
+from model.card.ModelCard import ModelCard
 
 
 

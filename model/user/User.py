@@ -28,7 +28,7 @@ class User():
             Raised when the length of any attribute goes out of range
     """
 
-    def __init__(self, package: tuple=()):
+    def __init__(self, package: tuple=()) -> None:
         self._ID_MAX_LENGTH = 10
         self._PASSWORD_MAX_LENGTH = 20
         self._NAME_MAX_LENGTH = 20
@@ -43,7 +43,7 @@ class User():
         self.mWins = 0
         self.mLosses = 0
 
-        self.mCardIndex = ''
+        self.mCardIndex: User; self.mCardIndex = None
 
         if package:
             self.mId, self.mPassword, self.mName, self.mDescription, self.mLevel, self.mWins, self.mLosses, self.mCardIndex = package

@@ -1,14 +1,27 @@
+from typing import Any, List, Tuple, Callable, Iterable, Union
+
+from model.card.CardRank import ECardRank
+
+
+
 class Index():
-    def __init__(self):
+    def __init__(self) -> None:
         self._mDict = {}
 
-    def IndexAdd(self, tKey: str, tItem):
+    def IndexAdd(self, tKey: str, tItem) -> None:
         self._mDict[tKey] = tItem
 
-    def IndexGet(self, tKey: str):
-        return self._mDict[tKey]
+    def IndexGet(self, tKey: str) -> Any:
+        """
+        Return a value associated with the given key. Return False if not found
+        """
 
-    def IndexLookUp(self, tCheckerAndValues: list, tAttrToRecord: str):
+        try:
+            return self._mDict[tKey]
+        except KeyError:
+            return False
+
+    def IndexLookUp(self, tCheckerAndValues: List[Tuple[Callable, dict]], tAttrToRecord: str) -> List[str]:
         """
         Retrieve a list of Keys of items that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found and should be implemented in children classes
@@ -40,10 +53,10 @@ class Index():
         
         return res
 
-    def CheckerEval(self, tCheckerAndValues: list, tItem):
+    def CheckerEval(self, tCheckerAndValues: List[Tuple[Callable, dict]], tItem) -> Any:
         """
         Evaluate ALL checkers on a single item.
-        Return the Card itself, else return False.
+        Return the item itself, else return False.
         """
 
         for tChecker, tValue in tCheckerAndValues:
@@ -59,7 +72,7 @@ class Index():
 
     # ============================================== Base checker
 
-    def CheckerString(self, tValue: dict, tCurrentElementBeingCompared: str):
+    def CheckerString(self, tValue: dict, tCurrentElementBeingCompared: Union[str, Iterable]) -> bool:
         """
         Check for string/iterable
         OPTIONS
@@ -76,7 +89,7 @@ class Index():
             return True
         return False
 
-    def CheckerNumber(self, tValue: dict, tCurrentElementBeingCompared):
+    def CheckerNumber(self, tValue: dict, tCurrentElementBeingCompared: Union[int, ECardRank]) -> bool:
         """
         Check for Number/Enum
         OPTIONS

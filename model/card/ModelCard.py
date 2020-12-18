@@ -17,7 +17,7 @@ class ModelCard():
     + value : int
     """
 
-    def __init__(self, tPackage: tuple=()):
+    def __init__(self, tPackage: tuple=()) -> None:
         self.mCode = ""
         self.mName = ""
         self.mRank = ECardRank.NA

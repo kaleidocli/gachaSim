@@ -1,0 +1,12 @@
+GENERAL
+Model		== m
+User		== u
+
+SPECIFIC
+UserCard		--- uc
+ModelCard		--- mc
+User			--- u
+
+EXAMPLE
+User: u00385
+ModelCard: mc399

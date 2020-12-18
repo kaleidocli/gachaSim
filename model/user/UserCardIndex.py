@@ -1,10 +1,12 @@
+from typing import List, Tuple, Callable
+
 from base.Index import Index
 from model.user.UserCard import UserCard
 
 
 
 class UserCardIndex(Index):
-    def IndexAdd(self, tCardId: str, tCard: UserCard):
+    def IndexAdd(self, tCard: UserCard, tCardId: str='') -> None:
         """
         Add a card in to the UserCardIndex, with tCardId as key and tCard as value.
 
@@ -14,9 +16,9 @@ class UserCardIndex(Index):
                 if tCard is not an user.UserCard
         """
         if not isinstance(tCard, UserCard): raise TypeError("tCard needs to be a user.UserCard")
-        super().IndexAdd(tCardId, tCard)
+        super().IndexAdd(tCard.mId, tCard)
 
-    def IndexLookUp(self, tCheckerAndValues: list):
+    def IndexLookUp(self, tCheckerAndValues: List[Tuple[Callable, dict]]) -> List[str]:
         """
         Retrieve a list of IDs of cards that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found in this class
@@ -45,7 +47,7 @@ class UserCardIndex(Index):
 
     # Checkers ===============================================
 
-    def CardCheckerLevel(self, tValue: dict, tCard: UserCard):
+    def CardCheckerLevel(self, tValue: dict, tCard: UserCard) -> bool:
         """
         Check for level
         OPTIONS
@@ -65,7 +67,7 @@ class UserCardIndex(Index):
         if not isinstance(tCard, UserCard): raise TypeError("tCard needs to be a user.UserCard")
         return super().CheckerNumber(tValue, tCard.mLevel)
 
-    def CardCheckerBond(self, tValue: dict, tCard: UserCard):
+    def CardCheckerBond(self, tValue: dict, tCard: UserCard) -> bool:
         """
         Check for bond
         OPTIONS
@@ -84,7 +86,7 @@ class UserCardIndex(Index):
         """
         return super().CheckerNumber(tValue, tCard.mBond)
 
-    def CardCheckerUserTags(self, tValue: dict, tCard: UserCard):
+    def CardCheckerUserTags(self, tValue: dict, tCard: UserCard) -> bool:
         """
         Check for user's tag
         If tCard is UserCard, convert it to ModelCard beforehand.

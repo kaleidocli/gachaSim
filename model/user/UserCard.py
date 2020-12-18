@@ -1,7 +1,11 @@
+from typing import List
+
+
+
 class UserCard():
     gCardIds = []
 
-    def __init__(self, tPackage: tuple=()):
+    def __init__(self, tPackage: tuple=()) -> None:
         """
         Parameters
         ----------
@@ -35,13 +39,13 @@ class UserCard():
                 self.AddUserTag(userTag)
             return
     
-    def GetUserTags(self):
+    def GetUserTags(self) -> List[str]:
         return self._mUserTags
         
-    def SetUserTags(self, tUserTags: list):
+    def SetUserTags(self, tUserTags: list) -> None:
         self._mUserTags = tUserTags
 
-    def AddUserTag(self, tUserTag: str):
+    def AddUserTag(self, tUserTag: str) -> None:
         """
         Add user's tag. If dupes is found, return False.
         """

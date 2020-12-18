@@ -1,10 +1,12 @@
+from typing import List, Tuple, Callable
+
 from base.Index import Index
 from model.user.User import User
 
 
 
 class UserIndex(Index):
-    def IndexAdd(self, tUserId: str, tUser: User):
+    def IndexAdd(self, tUser: User, tUserId: str='') -> None:
         """
         Add a card in to the UserIndex, with tUserId as key and tUser as value.
 
@@ -14,9 +16,9 @@ class UserIndex(Index):
                 if tUser is not an user.User
         """
         if not isinstance(tUser, User): raise TypeError("tCard needs to be a user.User")
-        super().IndexAdd(tUserId, tUser)
+        super().IndexAdd(tUser.mId, tUser)
 
-    def IndexLookUp(self, tCheckerAndValues: list):
+    def IndexLookUp(self, tCheckerAndValues: List[Tuple[Callable, dict]]) -> List[str]:
         """
         Retrieve a list of IDs of User that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found in this class
@@ -46,7 +48,7 @@ class UserIndex(Index):
 
     # Checkers ===============================================
 
-    def UserCheckerName(self, tValue: dict, tUser: User):
+    def UserCheckerName(self, tValue: dict, tUser: User) -> bool:
         """
         Check for name
         OPTIONS
@@ -64,7 +66,7 @@ class UserIndex(Index):
         if not isinstance(tUser, User): raise TypeError("tUser needs to be a user.User")
         return super().CheckerString(tValue, tUser.mName)
 
-    def UserCheckerLevel(self, tValue: dict, tUser: User):
+    def UserCheckerLevel(self, tValue: dict, tUser: User) -> bool:
         """
         Check for level
         OPTIONS
@@ -84,7 +86,7 @@ class UserIndex(Index):
         if not isinstance(tUser, User): raise TypeError("tUser needs to be a user.User")
         return super().CheckerNumber(tValue, tUser.mLevel)
 
-    def UserCheckerWins(self, tValue: dict, tUser: User):
+    def UserCheckerWins(self, tValue: dict, tUser: User) -> bool:
         """
         Check for number of wins
         OPTIONS
@@ -104,7 +106,7 @@ class UserIndex(Index):
         if not isinstance(tUser, User): raise TypeError("tUser needs to be a user.User")
         return super().CheckerNumber(tValue, tUser.mWins)
 
-    def UserCheckerLosses(self, tValue: dict, tUser: User):
+    def UserCheckerLosses(self, tValue: dict, tUser: User) -> bool:
         """
         Check for number of losses
         OPTIONS

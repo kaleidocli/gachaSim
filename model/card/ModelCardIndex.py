@@ -1,10 +1,12 @@
+from typing import List, Tuple, Callable
+
 from base.Index import Index
 from model.card.ModelCard import ModelCard
 
 
 
 class ModelCardIndex(Index):
-    def IndexAdd(self, tCardCode: str, tCard: ModelCard):
+    def IndexAdd(self, tCard: ModelCard, tCardCode: str='') -> None:
         """
         Add a card in to the UserCardIndex, with tCardId as key and tCard as value.
 
@@ -14,9 +16,9 @@ class ModelCardIndex(Index):
                 if tCard is not an card.ModelCard
         """
         if not isinstance(tCard, ModelCard): raise TypeError("tCard needs to be a card.ModelCard")
-        super().IndexAdd(tCardCode, tCard)
+        super().IndexAdd(tCard.mCode, tCard)
 
-    def IndexLookUp(self, tCheckerAndValues: list):
+    def IndexLookUp(self, tCheckerAndValues: List[Tuple[Callable, dict]]) -> List[str]:
         """
         Retrieve a list of Codes of cards that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found in this class
@@ -46,7 +48,7 @@ class ModelCardIndex(Index):
 
     # Checkers ================================================
 
-    def ModelCardCheckerName(self, tValue: dict, tCard: ModelCard):
+    def ModelCardCheckerName(self, tValue: dict, tCard: ModelCard) -> bool:
         """
         Check for name
         If tCard is UserCard, convert it to ModelCard beforehand.
@@ -65,7 +67,7 @@ class ModelCardIndex(Index):
         if not isinstance(tCard, ModelCard): raise TypeError("tCard needs to be a card.ModelCard")
         return super().CheckerString(tValue, tCard.mName)
 
-    def ModelCardCheckerRank(self, tValue: dict, tCard: ModelCard):
+    def ModelCardCheckerRank(self, tValue: dict, tCard: ModelCard) -> bool:
         """
         Check for rank
         If tCard is UserCard, convert it to ModelCard beforehand.
@@ -86,7 +88,7 @@ class ModelCardIndex(Index):
         if not isinstance(tCard, ModelCard): raise TypeError("tCard needs to be a card.ModelCard")
         return super().CheckerNumber(tValue, tCard.mRank)
 
-    def ModelCardCheckerTag(self, tValue: dict, tCard: ModelCard):
+    def ModelCardCheckerTag(self, tValue: dict, tCard: ModelCard) -> bool:
         """
         Check for tag
         If tCard is UserCard, convert it to ModelCard beforehand.
@@ -105,7 +107,7 @@ class ModelCardIndex(Index):
         if not isinstance(tCard, ModelCard): raise TypeError("tCard needs to be a card.ModelCard")
         return super().CheckerString(tValue, tCard.mTag)
 
-    def ModelCardCheckerValue(self, tValue: dict, tCard: ModelCard):
+    def ModelCardCheckerValue(self, tValue: dict, tCard: ModelCard) -> bool:
         """
         Check for value
         If tCard is UserCard, convert it to ModelCard beforehand.

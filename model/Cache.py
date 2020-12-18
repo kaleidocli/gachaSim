@@ -1,4 +1,4 @@
-from typing import List, Tuple, Callable, Union
+from typing import List, Tuple, Callable, Union, Any
 
 from model.card.ModelCardIndex import ModelCardIndex
 from model.user.UserCardIndex import UserCardIndex
@@ -11,6 +11,18 @@ from model.user.UserCard import UserCard
 
 class Cache():
     def __init__(self) -> None:
+        """
+        NOTES
+        ----------
+        To update new data type:
+        + Create the data type
+        + Create the index for managing that type, inheriting from Index
+        + Create a new index attribute of this class, set up getter/setter
+        + Update CacheIndexAdd(), CacheIndexGet(), CacheIndexRemove(), CacheIndexLookUp()
+        + Added the type to _INDEX_SUPPORTED_TYPE
+        """
+
+        self._INDEX_SUPPORTED_TYPE = [ModelCard, UserCard, User]
         self._mUserIndex: ModelCardIndex; self._mUserCardIndex = None
         self._mModelCardIndex: ModelCardIndex; self._mModelCardIndex = None
         self._mUserCardIndex: UserCardIndex; self._mUserCardIndex = None
@@ -36,7 +48,8 @@ class Cache():
 
     def CacheIndexAdd(self, tItem) -> bool:
         """
-        Add an item to one of the indexes based on its type
+        Add an item to one of the indexes based on its type.
+        Return False if item is incorrect type
         """
         try:
             self._mModelCardIndex.IndexAdd(tItem)
@@ -51,11 +64,12 @@ class Cache():
             return True
         except TypeError: pass
         return False
-
+    
     def CacheIndexGet(self, tKey: str) -> Union[UserCard, User, ModelCard]:
         """
-        Get the value associated with given key from one of the indexes. Return False if not found
+        Get the value associated with given key from one of the indexes.
         + Which index to use for looking up is based on the prefix the given key. See "_notes/id_naming_convention.txt"
+        + Raise KeyError if key is not found
         """
         if tKey.startswith("u"):
             return self._mUserIndex.IndexGet(tKey)
@@ -63,7 +77,19 @@ class Cache():
             return self._mUserCardIndex.IndexGet(tKey)
         elif tKey.startswith("mc"):
             return self._mModelCardIndex.IndexGet(tKey)
-        return False
+
+    def CacheIndexRemove(self, tKey: str) -> None:
+        """
+        Remove the value associated with given key from one of the indexes. 
+        + Which index to use for looking up is based on the prefix the given key. See "_notes/id_naming_convention.txt"
+        + Raise KeyError if key is not found
+        """
+        if tKey.startswith("u"):
+            return self._mUserIndex.IndexRemove(tKey)
+        elif tKey.startswith("uc"):
+            return self._mUserCardIndex.IndexRemove(tKey)
+        elif tKey.startswith("mc"):
+            return self._mModelCardIndex.IndexRemove(tKey)
 
     def CacheIndexLookUp(self, tCheckerAndValues: List[Tuple[Callable, dict]], tIndexNum: int) -> List[str]:
         """
@@ -93,3 +119,9 @@ class Cache():
             return self._mUserCardIndex.IndexLookUp(tCheckerAndValues)
         elif tIndexNum == 2:
             return self._mUserIndex.IndexLookUp(tCheckerAndValues)
+
+    def IsAddable(self, tItem: Any) -> bool:
+        for tType in self._INDEX_SUPPORTED_TYPE:
+            if isinstance(tItem, tType):
+                return True
+        return False

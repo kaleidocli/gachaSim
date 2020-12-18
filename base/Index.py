@@ -11,6 +11,9 @@ class Index():
     def IndexAdd(self, tKey: str, tItem) -> None:
         self._mDict[tKey] = tItem
 
+    def IndexRemove(self, tKey: str, tItem) -> None:
+        del self._mDict[tKey]
+
     def IndexGet(self, tKey: str) -> Any:
         """
         Return a value associated with the given key. Return False if not found

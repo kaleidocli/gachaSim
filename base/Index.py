@@ -2,15 +2,15 @@ class Index():
     def __init__(self):
         self._mDict = {}
 
-    def IndexAdd(self, tKey: str, tCard):
-        self._mDict[tKey] = tCard
+    def IndexAdd(self, tKey: str, tItem):
+        self._mDict[tKey] = tItem
 
     def IndexGet(self, tKey: str):
         return self._mDict[tKey]
 
-    def IndexLookUp(self, tCheckerAndValues: dict, tAttrToRecord: str):
+    def IndexLookUp(self, tCheckerAndValues: list, tAttrToRecord: str):
         """
-        Retrieve a list of Keys of cards that satisfied the condition of <tCheckers>.
+        Retrieve a list of Keys of items that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found and should be implemented in children classes
         + Raise KeyError if a key (of tValues' dict) required by a checker is not found
 
@@ -19,9 +19,8 @@ class Index():
         tAttrToRecord : str
                 Name of the attribute to be used as Key. (e.g. CardCode, CardId)
 
-        tCheckerAndValues : dict
-                Pairs of <(Checker, i): Values>
-                i is an int, solely to allow multiple dupilcated Checkers in dict.
+        tCheckerAndValues : list
+                List contains tuples of (Checker, Values)
 
         + Checker : function
                 Function that receive 2 args: Values, Card
@@ -34,27 +33,27 @@ class Index():
 
         res = []
 
-        for tCard in self._mDict.values():
-            tResCard = self.IndexLookUpOne(tCheckerAndValues, tCard)
-            if tResCard:
-                res.append(getattr(tResCard, tAttrToRecord))
+        for tItem in self._mDict.values():
+            tResItem = self.CheckerEval(tCheckerAndValues, tItem)
+            if tResItem:
+                res.append(getattr(tResItem, tAttrToRecord))
         
         return res
 
-    def IndexLookUpOne(self, tCheckerAndValues: dict, tCard):
+    def CheckerEval(self, tCheckerAndValues: list, tItem):
         """
-        Look up for a single Card.
+        Evaluate ALL checkers on a single item.
         Return the Card itself, else return False.
         """
 
-        for tChecker in tCheckerAndValues.keys():
+        for tChecker, tValue in tCheckerAndValues:
             try:
-                if tChecker[0](tCheckerAndValues[tChecker[0]], tCard):
-                    return tCard
+                if not tChecker(tValue, tItem):
+                    return False
             except KeyError as e:
                 # TODO: get some log here later
                 raise e
-        return False
+        return tItem
 
 
 

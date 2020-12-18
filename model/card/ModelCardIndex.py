@@ -16,16 +16,15 @@ class ModelCardIndex(Index):
         if not isinstance(tCard, ModelCard): raise TypeError("tCard needs to be a card.ModelCard")
         super().IndexAdd(tCardCode, tCard)
 
-    def IndexLookUp(self, tCheckerAndValues: dict):
+    def IndexLookUp(self, tCheckerAndValues: list):
         """
-        Retrieve a list of Codes of cards that satisfied the condition of <tCheckers>.
+        Retrieve a list of Codes of cards that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found in this class
 
         Parameters
         ----------
-        tCheckerAndValues : dict
-                Pairs of <(Checker, i): Values>
-                i is an int, solely to allow multiple dupilcated Checkers in dict.
+        tCheckerAndValues : list
+                List contains tuples of (Checker, Values)
 
         + Checker : function
                 Function that receive 2 args: Values, Card

@@ -16,16 +16,15 @@ class UserIndex(Index):
         if not isinstance(tUser, User): raise TypeError("tCard needs to be a user.User")
         super().IndexAdd(tUserId, tUser)
 
-    def IndexLookUp(self, tCheckerAndValues: dict):
+    def IndexLookUp(self, tCheckerAndValues: list):
         """
-        Retrieve a list of IDs of User that satisfied the condition of <tCheckers>.
+        Retrieve a list of IDs of User that satisfied ALL conditions of <tCheckers>.
         Pre-made checkers can be found in this class
 
         Parameters
         ----------
-        tCheckerAndValues : dict
-                Pairs of <(Checker, i): Values>
-                i is an int, solely to allow multiple dupilcated Checkers in dict.
+        tCheckerAndValues : list
+                List contains tuples of (Checker, Values)
 
         + Checker : function
                 Function that receive 2 args: Values, Card

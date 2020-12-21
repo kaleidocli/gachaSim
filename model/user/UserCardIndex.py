@@ -104,3 +104,23 @@ class UserCardIndex(Index):
         """
         if not isinstance(tCard, UserCard): raise TypeError("tCard needs to be a user.UserCard")
         return super().CheckerNumber(tValue, tCard.GetUserTags())
+
+    def CardCheckerExp(self, tValue: dict, tCard: UserCard) -> bool:
+        """
+        Check for level
+        OPTIONS
+        ----------
+        value : int
+                Value that will be used as sample (or lower bound)
+        value_2 : ModelCard
+                (Only if mode=='r') Second value that will be used as upper bound
+        mode : list of str
+                Either 's' (search with a single value)
+                    or 'r' (search within a range of value. Need another arg <value_2>)
+        Exceptions
+        ----------
+        TypeError
+                if tCard is not an user.UserCard
+        """
+        if not isinstance(tCard, UserCard): raise TypeError("tCard needs to be a user.UserCard")
+        return super().CheckerNumber(tValue, tCard.mExp)

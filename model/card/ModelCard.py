@@ -1,4 +1,7 @@
+from typing import List, Tuple, Dict
+
 from model.card.CardRank import ECardRank
+from model.card.ModelCardImage import ModelCardImage
 
 
 
@@ -11,7 +14,7 @@ class ModelCard():
     + code : str
     + name : str
     + rank : card.CardRank.CardRank
-    + description : str
+    + descriptions : dict<int, str>
     + imageDir : str
     + tag : list
     + value : int
@@ -21,8 +24,8 @@ class ModelCard():
         self.mCode = ""
         self.mName = ""
         self.mRank = ECardRank.NA
-        self.mDescription = ""
-        self.mImageDir = ""
+        self.mDescriptions = {}
+        self.mCardImages: ModelCardImage; self.mCardImages = None
         self.mTag = []
         self.mValue = 0
 

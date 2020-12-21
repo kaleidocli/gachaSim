@@ -26,6 +26,7 @@ class UserCard():
         self.mCode = ''
 
         self.mLevel = 0
+        self.mExp = 0
         self.mBond = 0
         self._mUserTags = []
 
